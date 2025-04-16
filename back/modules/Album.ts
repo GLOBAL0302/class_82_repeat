@@ -5,7 +5,7 @@ const schema = mongoose.Schema;
 const AlbumSchema = new schema({
   title: {
     type: String,
-    required: true,
+    required: [true, "title is required for album"],
   },
   artist: {
     type: mongoose.Schema.ObjectId,
@@ -15,8 +15,12 @@ const AlbumSchema = new schema({
   created_at: {
     type: String,
     required: [true, "Created date is required"],
+    default: () => new Date().toISOString,
   },
-  image: String,
+  image: {
+    type: String,
+    default: null,
+  },
 });
 
 const Album = mongoose.model("Album", AlbumSchema);
