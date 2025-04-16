@@ -13,3 +13,6 @@ const TrackSchema = new schema({
   },
   duration: String,
 });
+
+const Track = mongoose.model("Track", TrackSchema);
+export default Track;

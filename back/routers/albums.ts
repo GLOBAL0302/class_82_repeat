@@ -23,6 +23,23 @@ albumsRouter.get("/", async (req, res, next) => {
   }
 });
 
+albumsRouter.get("/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const albums = await Album.find({ _id: id }).populate("artist");
+    if (albums.length < 1) {
+      res.status(200).send({ message: "Album has not been added yet" });
+      return;
+    }
+    res.status(200).send(albums);
+  } catch (e) {
+    if (e instanceof Error.ValidationError) {
+      res.status(400).send({ error: e });
+    }
+    next(e);
+  }
+});
+
 albumsRouter.post("/", imagesUpload.single("image"), async (req, res, next) => {
   try {
     const newAlbum = {
