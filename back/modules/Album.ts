@@ -15,7 +15,7 @@ const AlbumSchema = new schema({
   created_at: {
     type: String,
     required: [true, "Created date is required"],
-    default: () => new Date().toISOString,
+    default: () => new Date(),
   },
   image: {
     type: String,

@@ -9,8 +9,10 @@ const artistsRouter = express.Router();
 artistsRouter.get("/", async (req, res, next) => {
   try {
     const artists = await Artist.find();
-    if (artists.length < 1)
+    if (artists.length < 1) {
       res.status(200).send({ message: "Artists not added yet" });
+      return;
+    }
 
     res.status(200).send(artists);
   } catch (e) {
