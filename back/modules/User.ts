@@ -1,9 +1,11 @@
 import mongoose, { HydratedDocument, Model, Schema } from "mongoose";
 import bcrypt from "bcrypt";
 import { IUserFields } from "../types";
+import { randomUUID } from "crypto";
 
 interface userMethods {
   checkPassword: (password: string) => Promise<boolean>;
+  generateToken():void
 }
 type UserModel = Model<IUserFields, {}, userMethods>;
 
@@ -25,16 +27,20 @@ const userSchema = new Schema<
     type: String,
     required: [true, "password is required"],
   },
-  //   token: {
-  //     type: String,
-  //     required: true,
-  //   },
+    token: {
+      type: String,
+      required: true,
+    },
 });
 
 userSchema.methods.checkPassword = async function (password: string) {
   const user = this;
   return await bcrypt.compare(password, user.password);
 };
+
+userSchema.methods.generateToken = function(){
+    this.token = randomUUID();
+}
 
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
