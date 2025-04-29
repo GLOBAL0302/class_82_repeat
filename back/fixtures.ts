@@ -23,12 +23,12 @@ const run = async()=>{
 
     const [eminem, pitbull]= await Artist.create({
         title:"Eminen",
-        image:"/eminem.jpg",
+        image:"fixtures/eminem.jpg",
         description:"Eminem (born October 17, 1972, St. Joseph, Missouri, U.S.) is an American rapper, record producer, and actor who is known as one of the most-controversial and best-selling artists of the early 21st century. He was the first recording artist to have 10 consecutive albums debut at number one on the Billboard album chart."
     },
     {
     title: "Pitbull",
-    image:"/pitbull.jpg",
+    image:"fixtures/pitbull.jpg",
     description:"Pitbull, whose real name is Armando Christian Pérez, is a Cuban-American rapper, singer, and songwriter known for his reggaeton-infused party pop and energetic performance style. He is often characterized by his trademark catchphrase, and his frequent references to his hometown of Miam"
     })
 
@@ -37,25 +37,25 @@ const run = async()=>{
            title:"Encore",
            artist:eminem,
            created_at:2004,
-           image: "/eminem_album_1.jpg"
+           image: "fixtures/eminem_album_1.jpg"
         },
         {
             title:"The eminem Show",
             artist:eminem,
             created_at:2004,
-            image: "/eminem_album_2.jpg"
+            image: "fixtures/eminem_album_2.jpg"
          },
          {
             title:"DALE",
             artist:pitbull,
             created_at:2015,
-            image: "/pitbull_album_2.jpg"
+            image: "fixtures/pitbull_album_2.jpg"
          },
          {
             title:"Planet Pit",
             artist:pitbull,
             created_at:2018,
-            image: "/pitbull_album_2.jpg"
+            image: "fixtures/pitbull_album_2.jpg"
          }
     );
 

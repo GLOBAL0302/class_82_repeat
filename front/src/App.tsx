@@ -1,19 +1,20 @@
-import { Route, Router, Routes } from 'react-router-dom'
-import './App.css'
+import { Route, Router, Routes } from 'react-router-dom';
+import './App.css';
+import Artists from './components/Artists/Artists';
+import { Container } from '@mui/material';
 
-function App() {
-
-
+const App = () => {
   return (
     <>
-    <Routes>
-      <Route>
-        
-
-      </Route>
-    </Routes>
+      <main>
+        <Container>
+          <Routes>
+            <Route path="/" element={<Artists />} />
+          </Routes>
+        </Container>
+      </main>
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
