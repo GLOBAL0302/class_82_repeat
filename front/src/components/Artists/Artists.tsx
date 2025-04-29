@@ -14,7 +14,7 @@ const Artists = () => {
   const artistsLoading = useAppSelector(selectAllArtistsLoading);
   const artistsError = useAppSelector(selectAllArtistsError);
 
-  console.log(artists);
+
 
   const getAllArtists = useCallback(() => {
     dispatch(getAllArtistsThunk());
