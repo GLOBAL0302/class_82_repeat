@@ -8,13 +8,15 @@ albumsRouter.get("/", async (req, res, next) => {
   try {
     const artistId = req.query.artistId;
     const filter = artistId ? { artist: artistId } : {};
-    const albums = await Album.find(filter);
+    const albums = await Album.find(filter).populate("artist");
     if (albums.length < 1) {
       res.status(200).send({ message: "Album has not been added yet" });
       return;
     }
 
-    res.status(200).send(albums);
+    const sortedAlbum = albums.sort((a, b) => b.created_at - a.created_at);
+
+    res.status(200).send(sortedAlbum);
   } catch (e) {
     if (e instanceof Error.ValidationError) {
       res.status(400).send({ error: e });

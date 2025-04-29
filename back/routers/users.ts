@@ -13,7 +13,7 @@ usersRouter.post("/", async (req, res, next) => {
 
     const user = new User(newUser);
 
-    user.generateToken()
+    user.generateToken();
     await user.save();
 
     res.status(200).send({
@@ -53,7 +53,7 @@ usersRouter.post("/sessions", async (req, res, next) => {
     user.generateToken();
     await user.save();
 
-    res.send({ message: "Username and Password is correct" , user});
+    res.send({ message: "Username and Password is correct", user });
   } catch (e) {
     if (e instanceof Error.ValidationError) {
       res.status(200).send({ error: e });

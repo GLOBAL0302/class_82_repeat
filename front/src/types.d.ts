@@ -8,13 +8,14 @@ export interface IArtists {
 export interface IAlbums {
   _id: string;
   title: string;
-  arttist: string;
+  artist: IArtists;
   created_at: string;
+  image: string;
 }
 
 export interface ITracks {
   _id: string;
   title: string;
-  album: string;
+  album: IAlbums;
   duration: string;
 }

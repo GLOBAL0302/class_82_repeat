@@ -11,9 +11,9 @@ const TrackSchema = new schema({
     ref: "Album",
     required: [true, "album Id is required for track"],
   },
-  track_number:{
-    type:Number,
-    required:[true,  "Track number is required"]
+  track_number: {
+    type: Number,
+    required: [true, "Track number is required"],
   },
   duration: String,
 });

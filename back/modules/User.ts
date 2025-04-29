@@ -5,7 +5,7 @@ import { randomUUID } from "crypto";
 
 interface userMethods {
   checkPassword: (password: string) => Promise<boolean>;
-  generateToken():void
+  generateToken(): void;
 }
 type UserModel = Model<IUserFields, {}, userMethods>;
 
@@ -27,10 +27,10 @@ const userSchema = new Schema<
     type: String,
     required: [true, "password is required"],
   },
-    token: {
-      type: String,
-      required: true,
-    },
+  token: {
+    type: String,
+    required: true,
+  },
 });
 
 userSchema.methods.checkPassword = async function (password: string) {
@@ -38,9 +38,9 @@ userSchema.methods.checkPassword = async function (password: string) {
   return await bcrypt.compare(password, user.password);
 };
 
-userSchema.methods.generateToken = function(){
-    this.token = randomUUID();
-}
+userSchema.methods.generateToken = function () {
+  this.token = randomUUID();
+};
 
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();

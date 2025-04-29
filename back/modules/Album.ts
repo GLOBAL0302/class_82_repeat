@@ -14,7 +14,7 @@ const AlbumSchema = new schema({
   },
   created_at: {
     type: Number,
-    required: [true, "Created date is required"]
+    required: [true, "Created date is required"],
   },
   image: {
     type: String,

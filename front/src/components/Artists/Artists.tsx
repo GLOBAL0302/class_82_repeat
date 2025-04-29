@@ -4,9 +4,11 @@ import { selectAllArtists, selectAllArtistsError, selectAllArtistsLoading } from
 import { getAllArtistsThunk } from './ArtistsThunk';
 import { CardMedia, CircularProgress, Grid, Typography } from '@mui/material';
 import { apiUrl } from '../../GlobalConstants';
+import { useNavigate } from 'react-router-dom';
 
 const Artists = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const artists = useAppSelector(selectAllArtists);
   const artistsLoading = useAppSelector(selectAllArtistsLoading);
@@ -22,9 +24,18 @@ const Artists = () => {
     void getAllArtists();
   }, []);
 
+  const goToAlbum = (albumId: string) => {
+    navigate(`/albums/${albumId}`);
+  };
+
   return (
     <div>
-      <Grid>
+      <Grid
+        sx={{
+          padding: 2,
+          border: '2px dashed black',
+        }}
+      >
         <Grid container justifyContent="center">
           <Typography variant="h4" component="p">
             Artists
@@ -46,14 +57,15 @@ const Artists = () => {
                   flexDirection="column"
                   alignItems="center"
                   key={artist._id}
+                  onClick={() => goToAlbum(artist._id)}
                 >
                   <Grid>
                     <Typography variant="body1" component="p">
                       {artist.title}
                     </Typography>
                   </Grid>
-                  <Grid>
-                    <CardMedia component="img" image={artist.image ? apiUrl + '/' + artist.image : ''} height="200" />
+                  <Grid sx={{ width: 300 }}>
+                    <CardMedia component="img" image={artist.image ? apiUrl + '/' + artist.image : ''} height="300" />
                   </Grid>
                 </Grid>
               ))}

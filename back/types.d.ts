@@ -20,5 +20,5 @@ export interface ITrack {
 export interface IUserFields {
   username: string;
   password: string;
-  token:string
+  token: string;
 }
