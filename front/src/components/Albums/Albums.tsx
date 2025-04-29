@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../store/hooks';
 import { getAllAlbumsThunk } from './albumsThunks';
 import { useSelector } from 'react-redux';
@@ -9,6 +9,8 @@ import { apiUrl } from '../../GlobalConstants';
 
 const Albums = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+
   const dispatch = useAppDispatch();
   const albums = useSelector(selectAllAlbums);
   const albumsLoading = useSelector(selectAllAlbumsLoading);
@@ -21,6 +23,10 @@ const Albums = () => {
   useEffect(() => {
     void getAllAlbums();
   }, [id, getAllAlbums]);
+
+  const goToTracksPage = (albumId: string) => {
+    navigate(`/tracks/${albumId}`);
+  };
 
   return (
     <Grid
@@ -41,7 +47,16 @@ const Albums = () => {
         ) : (
           <Grid container gap={2}>
             {albums.map((album) => (
-              <Grid border={'1px solid black'} container flexDirection="column" alignItems="center" key={album._id}>
+              <Grid
+                onClick={() => {
+                  goToTracksPage(album._id);
+                }}
+                border={'1px solid black'}
+                container
+                flexDirection="column"
+                alignItems="center"
+                key={album._id}
+              >
                 <Grid sx={{ width: 200 }}>
                   <CardMedia component="img" image={album.image ? apiUrl + '/' + album.image : ''} height="300" />
                 </Grid>

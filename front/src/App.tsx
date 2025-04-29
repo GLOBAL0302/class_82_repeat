@@ -3,6 +3,7 @@ import './App.css';
 import Artists from './components/Artists/Artists';
 import { Container } from '@mui/material';
 import Albums from './components/Albums/Albums';
+import Tracks from './components/Tracks/Tracks';
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Artists />} />
             <Route path="/albums/:id" element={<Albums />} />
+            <Route path="/tracks/:id" element={<Tracks />} />
           </Routes>
         </Container>
       </main>

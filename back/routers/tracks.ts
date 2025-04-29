@@ -7,12 +7,17 @@ tracksRouter.get("/", async (req, res, next) => {
   try {
     const albumId = req.query.albumId;
     const filter = albumId ? { album: albumId } : {};
-    const tracks = await Track.find(filter);
+    const tracks = await Track.find(filter).populate({
+      path: "album",
+      populate: { path: "artist" },
+    });
     if (tracks.length < 1) {
       res.status(200).send({ message: "Track has not been added" });
       return;
     }
-    res.status(200).send(tracks);
+
+    const sortedTracks = tracks.sort((a, b) => a.track_number - b.track_number);
+    res.status(200).send(sortedTracks);
   } catch (e) {
     if (e instanceof Error.ValidationError) {
       res.status(400).send({ error: e });

@@ -15,6 +15,7 @@ export interface IAlbums {
 
 export interface ITracks {
   _id: string;
+  track_number: string;
   title: string;
   album: IAlbums;
   duration: string;
