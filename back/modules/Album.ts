@@ -13,9 +13,8 @@ const AlbumSchema = new schema({
     required: [true, "Artist Id is required"],
   },
   created_at: {
-    type: String,
-    required: [true, "Created date is required"],
-    default: () => new Date(),
+    type: Number,
+    required: [true, "Created date is required"]
   },
   image: {
     type: String,
