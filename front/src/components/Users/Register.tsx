@@ -21,7 +21,6 @@ const Register = () => {
   });
 
   const getFieldError = (fieldName: string) => {
-    console.log(registerError);
     try {
       return registerError?.errors[fieldName].message;
     } catch (e) {

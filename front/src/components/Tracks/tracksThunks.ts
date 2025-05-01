@@ -6,3 +6,11 @@ export const getAllTracksThunk = createAsyncThunk<ITracks[], string>('tracks/get
   const { data } = await axiosAPI.get(`/tracks?albumId=${id}`);
   return data;
 });
+
+export const addTrackToHistoryThunk = createAsyncThunk<void, { trackId: string; token: string }>(
+  'track/addTrackToHistoryThunk',
+  async ({ trackId, token }) => {
+    const { data } = await axiosAPI.post('/track_history', { trackId }, { headers: { Authorization: token } });
+    console.log(data);
+  },
+);

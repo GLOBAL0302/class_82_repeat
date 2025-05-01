@@ -2,27 +2,30 @@ import express from "express";
 import { Error } from "mongoose";
 import User from "../modules/User";
 import TrackHistory from "../modules/TrackHistory";
+import auth, { RequestWithUser } from "../middleware/auth";
 
 const trackHistoriesRouter = express.Router();
 
-trackHistoriesRouter.post("/", async (req, res, next) => {
+trackHistoriesRouter.post("/", auth, async (req, res, next) => {
   try {
-    const token = req.get("Authorization");
-    console.log(token);
+    const token = (req as RequestWithUser).user.token;
+
+    console.log("sd");
+    console.log(token, req.body);
     if (!token) {
       res.status(401).send({ error: "No Token Present, Unauthorized" });
       return;
     }
-    const user = await User.findOne({ token });
+    const userId = await User.findOne({ token });
 
-    if (!user) {
+    if (!userId) {
       res.status(401).send({ error: "Wrong Token" });
       return;
     }
 
     const newTrackHistory = {
-      user: user._id,
-      track: req.body.track,
+      user: userId,
+      track: req.body.trackId,
     };
 
     const trackHistory = await new TrackHistory(newTrackHistory);

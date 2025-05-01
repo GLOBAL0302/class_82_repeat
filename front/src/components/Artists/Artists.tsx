@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { selectAllArtists, selectAllArtistsError, selectAllArtistsLoading } from './artistsSlice';
+import { selectAllArtists, selectAllArtistsLoading } from './artistsSlice';
 import { getAllArtistsThunk } from './ArtistsThunk';
 import { CardMedia, CircularProgress, Grid, Typography } from '@mui/material';
 import { apiUrl } from '../../GlobalConstants';
@@ -12,7 +12,6 @@ const Artists = () => {
 
   const artists = useAppSelector(selectAllArtists);
   const artistsLoading = useAppSelector(selectAllArtistsLoading);
-  const artistsError = useAppSelector(selectAllArtistsError);
 
   const getAllArtists = useCallback(() => {
     dispatch(getAllArtistsThunk());

@@ -25,6 +25,7 @@ export interface IUser {
   _id: string;
   username: string;
   password: string;
+  token: string;
 }
 
 export interface IRegisterMutation {

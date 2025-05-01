@@ -6,10 +6,14 @@ import Albums from './components/Albums/Albums';
 import Tracks from './components/Tracks/Tracks';
 import Login from './components/Users/Login';
 import Register from './components/Users/Register';
+import AppToolBar from './components/UI/AppToolBar/AppToolBar';
 
 const App = () => {
   return (
     <>
+      <header>
+        <AppToolBar />
+      </header>
       <main>
         <Container>
           <Routes>
