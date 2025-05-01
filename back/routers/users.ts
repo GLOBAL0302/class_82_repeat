@@ -10,7 +10,6 @@ usersRouter.post("/", async (req, res, next) => {
       username: req.body.username,
       password: req.body.password,
     };
-
     const user = new User(newUser);
 
     user.generateToken();
@@ -20,12 +19,12 @@ usersRouter.post("/", async (req, res, next) => {
       messsage: "Registered new user",
       user,
     });
-  } catch (e) {
-    if (e instanceof Error.ValidationError) {
-      res.status(400).send({ error: e });
+  } catch (error) {
+    if (error instanceof Error.ValidationError) {
+      res.status(400).send(error);
       return;
     }
-    next();
+    next(error);
   }
 });
 
@@ -58,7 +57,7 @@ usersRouter.post("/sessions", async (req, res, next) => {
     if (e instanceof Error.ValidationError) {
       res.status(200).send({ error: e });
     }
-    next();
+    next(e);
   }
 });
 

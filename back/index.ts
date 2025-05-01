@@ -7,9 +7,12 @@ import tracksRouter from "./routers/tracks";
 import { json } from "stream/consumers";
 import usersRouter from "./routers/users";
 import trackHistoriesRouter from "./routers/trackHistories";
+import cors from "cors";
 
 const app = express();
 const port = 8000;
+
+app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 

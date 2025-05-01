@@ -21,11 +21,21 @@ const userSchema = new Schema<
   username: {
     type: String,
     unique: true,
-    required: [true, "username is required"],
+    required: true,
+    validate: {
+      validator: async function (value: string): Promise<boolean> {
+        if (!this.isModified("username")) return true;
+        const user: HydratedDocument<IUserFields> | null = await User.findOne({
+          username: value,
+        });
+        return !user;
+      },
+      message: "This is username is already taken",
+    },
   },
   password: {
     type: String,
-    required: [true, "password is required"],
+    required: true,
   },
   token: {
     type: String,
