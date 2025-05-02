@@ -17,6 +17,11 @@ export interface ITrack {
   duration: string;
 }
 
+export interface ITracksHistory {
+  dateTime: string;
+  track: ITrack;
+}
+
 export interface IUserFields {
   username: string;
   password: string;

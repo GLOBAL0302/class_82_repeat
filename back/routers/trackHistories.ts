@@ -6,10 +6,37 @@ import auth, { RequestWithUser } from "../middleware/auth";
 
 const trackHistoriesRouter = express.Router();
 
+trackHistoriesRouter.get("/", auth, async (req, res, next) => {
+  try {
+    const user = (req as RequestWithUser).user;
+    const allTracksHistory = await TrackHistory.find(
+      { user: user._id },
+      "-user",
+    ).populate({
+      path: "track",
+      populate: {
+        path: "album",
+        populate: {
+          path: "artist",
+        },
+      },
+    });
+
+    const sortedTracks = allTracksHistory.sort(
+      (a, b) => -a.dateTime.localeCompare(b.dateTime),
+    );
+    res.status(200).send(allTracksHistory);
+  } catch (error) {
+    if (error instanceof Error.ValidationError) {
+      res.status(400).send({ error });
+    }
+    next(error);
+  }
+});
+
 trackHistoriesRouter.post("/", auth, async (req, res, next) => {
   try {
     const token = (req as RequestWithUser).user.token;
-
     console.log("sd");
     console.log(token, req.body);
     if (!token) {

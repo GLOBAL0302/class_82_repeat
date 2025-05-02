@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button, Menu, MenuItem } from '@mui/material';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { IUser } from '../../../types';
 
 interface Props {
@@ -9,6 +9,7 @@ interface Props {
 
 const UserMenu: React.FC<Props> = ({ user }) => {
   const [usersMenu, setUsersMenu] = useState<HTMLElement | null>(null);
+  const navigate = useNavigate();
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setUsersMenu(event.currentTarget);
@@ -28,7 +29,7 @@ const UserMenu: React.FC<Props> = ({ user }) => {
             Add product
           </Button>
         </MenuItem>
-        <MenuItem>My History</MenuItem>
+        <MenuItem onClick={() => navigate('/trackHistory')}>My History</MenuItem>
         <MenuItem>Logout</MenuItem>
       </Menu>
     </div>

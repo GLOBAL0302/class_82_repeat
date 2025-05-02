@@ -21,6 +21,12 @@ export interface ITracks {
   duration: string;
 }
 
+export interface ITracksHistory {
+  _id: string;
+  track: ITracks;
+  dateTime: string;
+}
+
 export interface IUser {
   _id: string;
   username: string;

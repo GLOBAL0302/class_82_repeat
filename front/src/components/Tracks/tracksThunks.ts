@@ -11,6 +11,6 @@ export const addTrackToHistoryThunk = createAsyncThunk<void, { trackId: string; 
   'track/addTrackToHistoryThunk',
   async ({ trackId, token }) => {
     const { data } = await axiosAPI.post('/track_history', { trackId }, { headers: { Authorization: token } });
-    console.log(data);
+    return data;
   },
 );

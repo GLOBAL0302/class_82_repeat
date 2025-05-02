@@ -13,7 +13,7 @@ const trackHistorySchema = new schema({
     required: [true, "Track Id is required"],
   },
   dateTime: {
-    type: Date,
+    type: String,
     default: () => new Date(),
   },
 });
