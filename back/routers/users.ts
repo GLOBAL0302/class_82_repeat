@@ -1,6 +1,7 @@
 import express from "express";
 import { Error } from "mongoose";
 import User from "../modules/User";
+import auth, { RequestWithUser } from "../middleware/auth";
 
 const usersRouter = express.Router();
 
@@ -57,6 +58,25 @@ usersRouter.post("/sessions", async (req, res, next) => {
     if (e instanceof Error.ValidationError) {
       res.status(200).send({ error: e });
     }
+    next(e);
+  }
+});
+
+usersRouter.delete("/sessions", auth, async (req, res, next) => {
+  const token = (req as RequestWithUser).user.token;
+
+  if (!token) {
+    res.send({ message: "Succes LogOut" });
+  }
+
+  try {
+    const user = await User.findOne({ token });
+    if (user) {
+      user.generateToken();
+      await user.save();
+    }
+    res.send({ message: "Success Logout" });
+  } catch (e) {
     next(e);
   }
 });

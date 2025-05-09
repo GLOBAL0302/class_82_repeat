@@ -3,6 +3,8 @@ import config from "./config";
 import Artist from "./modules/Artist";
 import Album from "./modules/Album";
 import Track from "./modules/Track";
+import User from "./modules/User";
+import { randomUUID } from "crypto";
 
 const run = async () => {
   await mongoose.connect(config.db);
@@ -17,6 +19,21 @@ const run = async () => {
   } catch (e) {
     console.log("Collection were not created");
   }
+
+  await User.create(
+    {
+      username: "Jane",
+      password: "123",
+      role: "admin",
+      token: randomUUID(),
+    },
+    {
+      username: "John",
+      password: "123",
+      role: "user",
+      token: randomUUID(),
+    },
+  );
 
   const [eminem, pitbull] = await Artist.create(
     {

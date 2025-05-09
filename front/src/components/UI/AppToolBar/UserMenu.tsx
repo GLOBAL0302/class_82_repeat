@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Button, Menu, MenuItem } from '@mui/material';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { IUser } from '../../../types';
+import { useAppDispatch } from '../../../store/hooks';
+import { logOutThunk } from '../../Users/usersThunks';
 
 interface Props {
   user: IUser;
@@ -9,6 +11,7 @@ interface Props {
 
 const UserMenu: React.FC<Props> = ({ user }) => {
   const [usersMenu, setUsersMenu] = useState<HTMLElement | null>(null);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -30,7 +33,7 @@ const UserMenu: React.FC<Props> = ({ user }) => {
           </Button>
         </MenuItem>
         <MenuItem onClick={() => navigate('/trackHistory')}>My History</MenuItem>
-        <MenuItem>Logout</MenuItem>
+        <MenuItem onClick={() => dispatch(logOutThunk())}>Logout</MenuItem>
       </Menu>
     </div>
   );
