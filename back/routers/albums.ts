@@ -2,6 +2,7 @@ import express from "express";
 import { Error } from "mongoose";
 import Album from "../modules/Album";
 import { imagesUpload } from "../multer";
+import auth from "../middleware/auth";
 const albumsRouter = express.Router();
 
 albumsRouter.get("/", async (req, res, next) => {
@@ -42,27 +43,32 @@ albumsRouter.get("/:id", async (req, res, next) => {
   }
 });
 
-albumsRouter.post("/", imagesUpload.single("image"), async (req, res, next) => {
-  try {
-    const newAlbum = {
-      title: req.body.title,
-      artist: req.body.artist,
-      created_at: req.body.created_at,
-      image: req.file ? "images" + req.file.filename : null,
-    };
+albumsRouter.post(
+  "/",
+  auth,
+  imagesUpload.single("image"),
+  async (req, res, next) => {
+    try {
+      const newAlbum = {
+        title: req.body.title,
+        artist: req.body.artist,
+        created_at: req.body.created_at,
+        image: req.file ? "images" + req.file.filename : null,
+      };
 
-    const album = new Album(newAlbum);
-    album.save();
-    res.status(200).send({
-      message: "new Album was save",
-      album,
-    });
-  } catch (e) {
-    if (e instanceof Error.ValidationError) {
-      res.status(400).send({ error: e });
+      const album = new Album(newAlbum);
+      album.save();
+      res.status(200).send({
+        message: "new Album was save",
+        album,
+      });
+    } catch (e) {
+      if (e instanceof Error.ValidationError) {
+        res.status(400).send({ error: e });
+      }
+      next(e);
     }
-    next(e);
-  }
-});
+  },
+);
 
 export default albumsRouter;

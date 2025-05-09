@@ -8,6 +8,7 @@ import { json } from "stream/consumers";
 import usersRouter from "./routers/users";
 import trackHistoriesRouter from "./routers/trackHistories";
 import cors from "cors";
+import adminRouter from "./routers/admin";
 
 const app = express();
 const port = 8000;
@@ -15,6 +16,8 @@ const port = 8000;
 app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
+
+app.use("/admin", adminRouter);
 
 app.use("/artists", artistsRouter);
 app.use("/albums", albumsRouter);

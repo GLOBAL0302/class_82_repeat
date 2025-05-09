@@ -1,6 +1,7 @@
 import express from "express";
 import { Error } from "mongoose";
 import Track from "../modules/Track";
+import auth from "../middleware/auth";
 const tracksRouter = express.Router();
 
 tracksRouter.get("/", async (req, res, next) => {
@@ -26,7 +27,7 @@ tracksRouter.get("/", async (req, res, next) => {
   }
 });
 
-tracksRouter.post("/", async (req, res, next) => {
+tracksRouter.post("/", auth, async (req, res, next) => {
   try {
     const newTrack = {
       title: req.body.title,

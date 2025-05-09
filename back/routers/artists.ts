@@ -3,6 +3,7 @@ import Artist from "../modules/Artist";
 import { Error } from "mongoose";
 import { imagesUpload } from "../multer";
 import { title } from "process";
+import auth from "../middleware/auth";
 
 const artistsRouter = express.Router();
 
@@ -25,6 +26,7 @@ artistsRouter.get("/", async (req, res, next) => {
 
 artistsRouter.post(
   "/",
+  auth,
   imagesUpload.single("image"),
   async (req, res, next) => {
     try {
