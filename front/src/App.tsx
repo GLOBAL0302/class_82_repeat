@@ -8,6 +8,9 @@ import Login from './components/Users/Login';
 import Register from './components/Users/Register';
 import AppToolBar from './components/UI/AppToolBar/AppToolBar';
 import TrackHistory from './components/TracksHistory/tracksHistory';
+import AddArtist from './components/Artists/AddArtist';
+import AddAlbums from './components/Albums/AddAlbums';
+import AddTracks from './components/Tracks/AddTracks';
 
 const App = () => {
   return (
@@ -19,9 +22,15 @@ const App = () => {
         <Container>
           <Routes>
             <Route path="/" element={<Artists />} />
+            <Route path="/addArtist" element={<AddArtist />} />
+
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
+
             <Route path="/albums/:id" element={<Albums />} />
+            <Route path="/addAlbums" element={<AddAlbums />} />
+
+            <Route path="/AddTracks" element={<AddTracks />} />
             <Route path="/tracks/:id" element={<Tracks />} />
             <Route path="/trackHistory" element={<TrackHistory />} />
             <Route

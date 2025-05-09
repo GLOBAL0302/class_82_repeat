@@ -8,6 +8,7 @@ const albumsRouter = express.Router();
 albumsRouter.get("/", async (req, res, next) => {
   try {
     const artistId = req.query.artistId;
+
     const filter = artistId ? { artist: artistId } : {};
     const albums = await Album.find(filter).populate("artist");
     if (albums.length < 1) {

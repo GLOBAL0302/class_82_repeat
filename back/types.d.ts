@@ -17,6 +17,7 @@ export interface ITrack {
   title: string;
   album: IAlbum;
   duration: string;
+  track_number: number;
   isPublished: boolean;
 }
 

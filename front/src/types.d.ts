@@ -5,12 +5,25 @@ export interface IArtists {
   description: string;
 }
 
+export interface IArtistsMutation {
+  title: string;
+  image: File | null;
+  description: string;
+}
+
 export interface IAlbums {
   _id: string;
   title: string;
   artist: IArtists;
-  created_at: string;
+  created_at: number;
   image: string;
+}
+
+export interface IAlbumMutation {
+  title: string;
+  artist: string;
+  created_at: string;
+  image: File | null;
 }
 
 export interface ITracks {
@@ -18,6 +31,12 @@ export interface ITracks {
   track_number: string;
   title: string;
   album: IAlbums;
+  duration: string;
+}
+
+export interface ITracksMutation {
+  title: string;
+  album: string;
   duration: string;
 }
 
