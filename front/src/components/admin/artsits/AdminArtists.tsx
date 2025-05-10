@@ -1,13 +1,14 @@
 import { useCallback, useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { selectAllArtists, selectAllArtistsLoading } from './artistsSlice';
-import { getAllArtistsThunk } from './ArtistsThunk';
+
 import { CircularProgress, Grid, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { selectUser } from '../Users/usersSlice';
-import Artist from './Artist';
+import { selectUser } from '../../Users/usersSlice';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { selectAllArtists, selectAllArtistsLoading } from '../../Artists/artistsSlice';
+import { getAllArtistsThunk } from '../../Artists/ArtistsThunk';
+import Artist from '../../Artists/Artist';
 
-const Artists = () => {
+const AdminArtists = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const user = useAppSelector(selectUser);
@@ -47,7 +48,9 @@ const Artists = () => {
           ) : (
             <Grid container gap={2}>
               {artists.map((artist) => (
-                <Grid key={artist._id}>{artist.isPublished && <Artist artist={artist}></Artist>}</Grid>
+                <Grid key={artist._id}>
+                  <Artist artist={artist} />
+                </Grid>
               ))}
             </Grid>
           )}
@@ -57,4 +60,4 @@ const Artists = () => {
   );
 };
 
-export default Artists;
+export default AdminArtists;

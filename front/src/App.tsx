@@ -1,4 +1,4 @@
-import { Route, Router, Routes } from 'react-router-dom';
+import { Route, Router, Routes, useNavigate } from 'react-router-dom';
 import './App.css';
 import Artists from './components/Artists/Artists';
 import { Container, Typography } from '@mui/material';
@@ -11,8 +11,14 @@ import TrackHistory from './components/TracksHistory/tracksHistory';
 import AddArtist from './components/Artists/AddArtist';
 import AddAlbums from './components/Albums/AddAlbums';
 import AddTracks from './components/Tracks/AddTracks';
+import { useAppSelector } from './store/hooks';
+import { selectUser } from './components/Users/usersSlice';
+import AdminArtists from './components/admin/artsits/AdminArtists';
+import ProtectedRoute from './components/UI/ProtectedRoute/ProtectedRoute';
 
 const App = () => {
+  const user = useAppSelector(selectUser);
+
   return (
     <>
       <header>
@@ -26,6 +32,15 @@ const App = () => {
 
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
+
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute isAllowed={user?.role == 'admin'}>
+                  <AdminArtists />
+                </ProtectedRoute>
+              }
+            ></Route>
 
             <Route path="/albums/:id" element={<Albums />} />
             <Route path="/addAlbums" element={<AddAlbums />} />

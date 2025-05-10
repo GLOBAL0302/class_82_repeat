@@ -6,6 +6,7 @@ import { Button, CircularProgress, Grid, Typography } from '@mui/material';
 import { selectAllTracks, selectAllTracksLoading } from './tracksSlice';
 import { selectUser } from '../Users/usersSlice';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
+import Track from './Track';
 
 const Tracks = () => {
   const { id } = useParams();
@@ -33,37 +34,7 @@ const Tracks = () => {
         ) : (
           <Grid>
             {tracks.map((track) => (
-              <Grid
-                alignItems="center"
-                padding={1}
-                key={track._id}
-                marginBottom={2}
-                container
-                borderBottom="1px solid black"
-                justifyContent={'space-between'}
-              >
-                <Grid width="30%">
-                  <Typography>{track.title}</Typography>
-                </Grid>
-                <Grid>
-                  <Typography>{track.track_number}</Typography>
-                </Grid>
-                <Grid>
-                  <Typography>{track.duration}</Typography>
-                </Grid>
-                {user && (
-                  <Grid>
-                    <Button
-                      onClick={() => dispatch(addTrackToHistoryThunk({ token: user.token, trackId: track._id }))}
-                      color="warning"
-                      sx={{ border: '1px solid black' }}
-                      endIcon={<PlayCircleOutlineIcon />}
-                    >
-                      Play
-                    </Button>
-                  </Grid>
-                )}
-              </Grid>
+              <Grid key={track._id}>{track.isPublished && <Track track={track} />}</Grid>
             ))}
           </Grid>
         )}

@@ -3,6 +3,7 @@ export interface IArtists {
   title: string;
   image: string;
   description: string;
+  isPublished: boolean;
 }
 
 export interface IArtistsMutation {
@@ -17,6 +18,7 @@ export interface IAlbums {
   artist: IArtists;
   created_at: number;
   image: string;
+  isPublished: boolean;
 }
 
 export interface IAlbumMutation {
@@ -32,6 +34,7 @@ export interface ITracks {
   title: string;
   album: IAlbums;
   duration: string;
+  isPublished: boolean;
 }
 
 export interface ITracksMutation {
@@ -51,6 +54,7 @@ export interface IUser {
   username: string;
   password: string;
   token: string;
+  role: string;
 }
 
 export interface IRegisterMutation {

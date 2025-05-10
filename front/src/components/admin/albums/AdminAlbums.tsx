@@ -1,15 +1,17 @@
 import { useCallback, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { getAllAlbumsThunk } from './albumsThunks';
-import { useSelector } from 'react-redux';
-import { selectAllAlbums, selectAllAlbumsLoading } from './albumsSlice';
-import { CardMedia, CircularProgress, Grid, Typography } from '@mui/material';
-import { apiUrl } from '../../GlobalConstants';
-import { selectUser } from '../Users/usersSlice';
-import Album from './Album';
 
-const Albums = () => {
+import { useSelector } from 'react-redux';
+
+import { CardMedia, CircularProgress, Grid, Typography } from '@mui/material';
+
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { selectAllAlbums, selectAllAlbumsLoading } from '../../Albums/albumsSlice';
+import { selectUser } from '../../Users/usersSlice';
+import { getAllAlbumsThunk } from '../../Albums/albumsThunks';
+import Album from '../../Albums/Album';
+
+const AdminAlbums = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -45,7 +47,9 @@ const Albums = () => {
         ) : (
           <Grid container gap={2}>
             {albums.map((album) => (
-              <Grid key={album._id}>{album.isPublished && <Album album={album} />}</Grid>
+              <Grid key={album._id}>
+                <Album album={album} />
+              </Grid>
             ))}
           </Grid>
         )}
@@ -54,4 +58,4 @@ const Albums = () => {
   );
 };
 
-export default Albums;
+export default AdminAlbums;
