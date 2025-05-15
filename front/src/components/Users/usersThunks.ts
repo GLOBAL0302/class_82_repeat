@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { IGlobalError, ILoginMutation, IRegisterMutation, IUser, IValidationError } from '../../types';
 import { isAxiosError } from 'axios';
 import axiosAPI from '../../axiosApi';
+import { IGlobalError, ILoginMutation, IRegisterMutation, IUser, IValidationError } from '../../types';
 
 import { logOutReducer } from './usersSlice';
 
@@ -9,6 +9,21 @@ export interface RegisterAndLoadingResponse {
   user: IUser;
   message: string;
 }
+
+export const googleLogin = createAsyncThunk<IUser, string, { rejectValue: IGlobalError }>(
+  'users/googleLogin',
+  async (credential, { rejectWithValue }) => {
+    try {
+      const response = await axiosAPI.post<RegisterAndLoadingResponse>('/users/google', { credential });
+      return response.data.user;
+    } catch (error) {
+      if (isAxiosError(error) && error.response && error.response.status === 400) {
+        return rejectWithValue(error.response.data);
+      }
+      throw error;
+    }
+  },
+);
 
 export const register = createAsyncThunk<
   RegisterAndLoadingResponse,

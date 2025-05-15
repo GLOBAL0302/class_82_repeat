@@ -1,6 +1,6 @@
-import mongoose, { HydratedDocument, Model, ObjectId } from "mongoose";
 import argon2 from "argon2";
 import jwt from "jsonwebtoken";
+import mongoose, { HydratedDocument, Model } from "mongoose";
 import { IUserFields } from "../types";
 
 interface UserMethods {
@@ -56,6 +56,13 @@ const UserSchema = new mongoose.Schema<
       type: String,
       required: true,
     },
+    displayName: {
+      type: String,
+      required: true,
+    },
+    avatar: {
+      type: String,
+    },
     role: {
       type: String,
       required: true,
@@ -66,6 +73,7 @@ const UserSchema = new mongoose.Schema<
       type: String,
       required: true,
     },
+    googleID: String,
   },
   {
     virtuals: {

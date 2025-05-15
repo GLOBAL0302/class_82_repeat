@@ -25,6 +25,8 @@ const run = async () => {
     password: "123",
     confirmPassword: "123",
     role: "user",
+    displayName: "John",
+    avatar: "fixtures/pitbull.jpg",
   });
   john.generateToken();
   await john.save();
@@ -34,6 +36,8 @@ const run = async () => {
     password: "123",
     confirmPassword: "123",
     role: "admin",
+    displayName: "John",
+    avatar: "fixtures/pitbull.jpg",
   });
   jane.generateToken();
   await jane.save();

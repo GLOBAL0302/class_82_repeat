@@ -1,12 +1,13 @@
-import { Alert, Avatar, Box, Button, Grid, TextField, Typography } from '@mui/material';
-import { ILoginMutation } from '../../types';
-import { FormEvent, useState } from 'react';
-import Link from '@mui/material/Link';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { selectLoginError, selectLoginLoading } from './usersSlice';
-import { login } from './usersThunks';
 import LoginIcon from '@mui/icons-material/Login';
+import { Alert, Avatar, Box, Button, Grid, TextField, Typography } from '@mui/material';
+import Link from '@mui/material/Link';
+import { useState } from 'react';
+import { GoogleLogin } from '@react-oauth/google';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { ILoginMutation } from '../../types';
+import { selectLoginError, selectLoginLoading } from './usersSlice';
+import { googleLogin, login } from './usersThunks';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -36,6 +37,11 @@ const Login = () => {
       console.log(error);
     }
   };
+
+  const googleLoginHandler = async (credential: string) => {
+    await dispatch(googleLogin(credential)).unwrap();
+    navigate('/');
+  };
   return (
     <Box
       sx={{
@@ -53,6 +59,16 @@ const Login = () => {
       </Typography>
 
       {error && <Alert severity="error">{error.error}</Alert>}
+
+      <Box sx={{ pt: 2 }}>
+        <GoogleLogin
+          onSuccess={(credentialsResponse) => {
+            if (credentialsResponse.credential) {
+              void googleLoginHandler(credentialsResponse.credential);
+            }
+          }}
+        ></GoogleLogin>
+      </Box>
 
       <Box component="form" noValidate onSubmit={onSubmitFormHandler} sx={{ mt: 3 }}>
         <Grid container spacing={2}>

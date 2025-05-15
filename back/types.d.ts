@@ -30,6 +30,9 @@ export interface IUserFields {
   username: string;
   password: string;
   token: string;
+  displayName: string;
+  avatar: string;
   role: string;
+  googleID: string;
   __confirmPassword: string;
 }

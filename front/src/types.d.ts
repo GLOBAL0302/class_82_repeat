@@ -55,6 +55,8 @@ export interface IUser {
   password: string;
   token: string;
   role: string;
+  displayName: string;
+  avatar: string;
 }
 
 export interface IRegisterMutation {
