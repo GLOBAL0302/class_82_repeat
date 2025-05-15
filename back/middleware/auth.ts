@@ -13,7 +13,7 @@ const auth = async (expressReq: Request, res: Response, next: NextFunction) => {
   try {
     const req = expressReq as RequestWithUser;
 
-    const jwtToken = req.get("Authorization")?.replace("Bearer ", ""); // Bearer
+    const jwtToken = req.cookies.token;
 
     if (!jwtToken) {
       res.status(401).send({ error: "No token provided." });

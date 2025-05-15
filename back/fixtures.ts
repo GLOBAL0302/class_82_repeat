@@ -20,20 +20,23 @@ const run = async () => {
     console.log("Collection were not created");
   }
 
-  await User.create(
-    {
-      username: "Jane",
-      password: "123",
-      role: "admin",
-      token: randomUUID(),
-    },
-    {
-      username: "John",
-      password: "123",
-      role: "user",
-      token: randomUUID(),
-    },
-  );
+  const john = new User({
+    username: "John",
+    password: "123",
+    confirmPassword: "123",
+    role: "user",
+  });
+  john.generateToken();
+  await john.save();
+
+  const jane = new User({
+    username: "Jane",
+    password: "123",
+    confirmPassword: "123",
+    role: "admin",
+  });
+  jane.generateToken();
+  await jane.save();
 
   const [eminem, pitbull] = await Artist.create(
     {

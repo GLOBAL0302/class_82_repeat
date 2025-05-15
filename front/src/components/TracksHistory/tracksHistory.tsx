@@ -1,11 +1,10 @@
+import { CircularProgress, Grid, Typography } from '@mui/material';
 import { useCallback, useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { getAllTracksHistoryThunk } from './tracksHistoryThunks';
-import { selectAllTrackHistoryLoading, selectAllTracksHistory } from './tracksHistorySlice';
-import { Button, CircularProgress, Grid, Typography } from '@mui/material';
-import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
-import { selectUser } from '../Users/usersSlice';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { selectUser } from '../Users/usersSlice';
+import { selectAllTrackHistoryLoading, selectAllTracksHistory } from './tracksHistorySlice';
+import { getAllTracksHistoryThunk } from './tracksHistoryThunks';
 
 const TrackHistory = () => {
   const dispatch = useAppDispatch();

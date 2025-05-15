@@ -31,4 +31,5 @@ export interface IUserFields {
   password: string;
   token: string;
   role: string;
+  __confirmPassword: string;
 }

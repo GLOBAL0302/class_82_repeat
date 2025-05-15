@@ -8,6 +8,10 @@ interface UserMethods {
   generateToken(): void;
 }
 
+interface UserVirtuals {
+  confirmPassword: string;
+}
+
 const ARGON2_OPTIONS = {
   type: argon2.argon2id,
   memoryCost: 2 ** 16,
@@ -27,38 +31,55 @@ const UserSchema = new mongoose.Schema<
   HydratedDocument<IUserFields>,
   UserModel,
   UserMethods,
-  {}
->({
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-    validate: {
-      validator: async function (value: string): Promise<boolean> {
-        if (!this.isModified("username")) return true;
-        const user: HydratedDocument<IUserFields> | null = await User.findOne({
-          username: value,
-        });
-        return !user;
+  {},
+  UserVirtuals
+>(
+  {
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+      validate: {
+        validator: async function (value: string): Promise<boolean> {
+          if (!this.isModified("username")) return true;
+          const user: HydratedDocument<IUserFields> | null = await User.findOne(
+            {
+              username: value,
+            },
+          );
+          return !user;
+        },
+        message: "This is username is already taken",
       },
-      message: "This is username is already taken",
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    role: {
+      type: String,
+      required: true,
+      default: "user",
+      enum: ["user", "admin"],
+    },
+    token: {
+      type: String,
+      required: true,
     },
   },
-  password: {
-    type: String,
-    required: true,
+  {
+    virtuals: {
+      confirmPassword: {
+        get() {
+          return this.__confirmPassword;
+        },
+        set(confirmPassword: string) {
+          this.__confirmPassword = confirmPassword;
+        },
+      },
+    },
   },
-  role: {
-    type: String,
-    required: true,
-    default: "user",
-    enum: ["user", "admin"],
-  },
-  token: {
-    type: String,
-    required: true,
-  },
-});
+);
 
 UserSchema.methods.checkPassword = async function (password: string) {
   return await argon2.verify(this.password, password);
@@ -67,6 +88,15 @@ UserSchema.methods.checkPassword = async function (password: string) {
 UserSchema.methods.generateToken = function () {
   this.token = generateTokenJWT(this._id);
 };
+
+UserSchema.path("password").validate(async function (v: string) {
+  if (!this.isModified("password")) return;
+
+  if (v !== this.confirmPassword) {
+    this.invalidate("confirmPassword", "Password do not match");
+    this.invalidate("password", "Password do not match");
+  }
+});
 
 UserSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();

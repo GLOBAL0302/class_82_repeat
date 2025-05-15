@@ -37,8 +37,7 @@ trackHistoriesRouter.get("/", auth, async (req, res, next) => {
 trackHistoriesRouter.post("/", auth, async (req, res, next) => {
   try {
     const token = (req as RequestWithUser).user.token;
-    console.log("sd");
-    console.log(token, req.body);
+
     if (!token) {
       res.status(401).send({ error: "No Token Present, Unauthorized" });
       return;

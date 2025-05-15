@@ -4,7 +4,6 @@ import { isAxiosError } from 'axios';
 import axiosAPI from '../../axiosApi';
 
 import { logOutReducer } from './usersSlice';
-import { RootState } from '../../store/store';
 
 export interface RegisterAndLoadingResponse {
   user: IUser;
@@ -43,6 +42,6 @@ export const login = createAsyncThunk<IUser, ILoginMutation, { rejectValue: IGlo
 );
 
 export const logOutThunk = createAsyncThunk<void, void>('user/logOut', async (_arg, { dispatch }) => {
-  await axiosAPI.delete('/users/sessions');
+  await axiosAPI.delete('/users/sessions', { withCredentials: true });
   dispatch(logOutReducer());
 });

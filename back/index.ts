@@ -4,16 +4,24 @@ import config from "./config";
 import artistsRouter from "./routers/artists";
 import albumsRouter from "./routers/albums";
 import tracksRouter from "./routers/tracks";
-import { json } from "stream/consumers";
 import usersRouter from "./routers/users";
 import trackHistoriesRouter from "./routers/trackHistories";
 import cors from "cors";
 import adminRouter from "./routers/admin";
+import cookieParser from "cookie-parser";
 
 const app = express();
 const port = 8000;
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  }),
+);
+
+app.use(cookieParser());
+
 app.use(express.json());
 app.use(express.static("public"));
 

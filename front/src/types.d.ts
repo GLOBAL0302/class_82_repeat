@@ -60,6 +60,7 @@ export interface IUser {
 export interface IRegisterMutation {
   username: string;
   password: string;
+  confirmPassword: string;
 }
 
 export interface ILoginMutation {

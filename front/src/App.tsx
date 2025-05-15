@@ -1,20 +1,20 @@
-import { Route, Router, Routes, useNavigate } from 'react-router-dom';
-import './App.css';
-import Artists from './components/Artists/Artists';
 import { Container, Typography } from '@mui/material';
+import { Route, Routes } from 'react-router-dom';
+import './App.css';
+import AdminArtists from './components/admin/artsits/AdminArtists';
+import AddAlbums from './components/Albums/AddAlbums';
 import Albums from './components/Albums/Albums';
+import AddArtist from './components/Artists/AddArtist';
+import Artists from './components/Artists/Artists';
+import AddTracks from './components/Tracks/AddTracks';
 import Tracks from './components/Tracks/Tracks';
+import TrackHistory from './components/TracksHistory/tracksHistory';
+import AppToolBar from './components/UI/AppToolBar/AppToolBar';
+import ProtectedRoute from './components/UI/ProtectedRoute/ProtectedRoute';
 import Login from './components/Users/Login';
 import Register from './components/Users/Register';
-import AppToolBar from './components/UI/AppToolBar/AppToolBar';
-import TrackHistory from './components/TracksHistory/tracksHistory';
-import AddArtist from './components/Artists/AddArtist';
-import AddAlbums from './components/Albums/AddAlbums';
-import AddTracks from './components/Tracks/AddTracks';
-import { useAppSelector } from './store/hooks';
 import { selectUser } from './components/Users/usersSlice';
-import AdminArtists from './components/admin/artsits/AdminArtists';
-import ProtectedRoute from './components/UI/ProtectedRoute/ProtectedRoute';
+import { useAppSelector } from './store/hooks';
 
 const App = () => {
   const user = useAppSelector(selectUser);

@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import Link from '@mui/material/Link';
 import { IRegisterMutation } from '../../types';
@@ -18,6 +18,7 @@ const Register = () => {
   const [userForm, setUserForm] = useState<IRegisterMutation>({
     username: '',
     password: '',
+    confirmPassword: '',
   });
 
   const getFieldError = (fieldName: string) => {
@@ -91,6 +92,22 @@ const Register = () => {
               onChange={onInputChange}
               helperText={getFieldError('password')}
               error={Boolean(getFieldError('password'))}
+            />
+          </Grid>
+
+          <Grid size={{ xs: 12 }}>
+            <TextField
+              disabled={registerLoading}
+              fullWidth
+              name="confirmPassword"
+              label="confirm Password"
+              type="password"
+              id="confirmPassword"
+              autoComplete="confirmPassword"
+              value={userForm.confirmPassword}
+              onChange={onInputChange}
+              helperText={getFieldError('confirmPassword')}
+              error={Boolean(getFieldError('confirmPassword'))}
             />
           </Grid>
         </Grid>

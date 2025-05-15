@@ -10,6 +10,7 @@ usersRouter.post("/", async (req, res, next) => {
     const newUser = {
       username: req.body.username,
       password: req.body.password,
+      confirmPassword: req.body.confirmPassword,
     };
     const user = new User(newUser);
 
@@ -51,9 +52,21 @@ usersRouter.post("/sessions", async (req, res, next) => {
     }
 
     user.generateToken();
+
+    res.cookie("token", user.token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+    });
     await user.save();
 
-    res.send({ message: "Username and Password is correct", user });
+    const safeUser = {
+      _id: user._id,
+      username: user.username,
+      role: user.role,
+    };
+
+    res.send({ message: "Username and Password is correct", user: safeUser });
   } catch (e) {
     if (e instanceof Error.ValidationError) {
       res.status(200).send({ error: e });
@@ -67,7 +80,14 @@ usersRouter.delete("/sessions", auth, async (req, res, next) => {
 
   if (!token) {
     res.send({ message: "Succes LogOut" });
+    return;
   }
+
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+  });
 
   try {
     const user = await User.findOne({ token });
